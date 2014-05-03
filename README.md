@@ -9,10 +9,13 @@ Add Income and Expenses
   StepOne: Created a test database in MongoDB
   StepTwo: Linked together MongoDB and PyThon
   StepThree: Created a GUI using wxPython
-  StepFour: 
+  StepFour: Display information captured by GUI
+  StepFive: Add new record to database
 
 Second Iteration Plan:
 See a summary of entries
+  StepOne: Query the database
+  StepTwo: What does that have to become to show in GUI??
 
 Third Iteration Plan:
 Edit entries
