@@ -16,6 +16,10 @@ Second Iteration Plan:
 See a summary of entries
   StepOne: Query the database
   StepTwo: What does that have to become to show in GUI??
+  
+  #Separate screen for this?
+  Create a table, and then have separate queries in each field indicating a query, sort, and show nth result in this box. 
+  
 
 Third Iteration Plan:
 Edit entries
