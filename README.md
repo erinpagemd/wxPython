@@ -19,6 +19,12 @@ See a summary of entries
   
   #Separate screen for this?
   Create a table, and then have separate queries in each field indicating a query, sort, and show nth result in this box. 
+  Can have the amount show in color based on exp/inc. 
+  Show results within a specific time frame?
+  Refresh? Push? Append?
+  
+  Need to create expense/income field for input.
+  Need to take out the button for showing entries.
   
 
 Third Iteration Plan:
