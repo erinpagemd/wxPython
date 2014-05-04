@@ -22,13 +22,8 @@ class MyFrame(wx.Frame):
         self.ResultTitle.SetForegroundColour(wx.BLUE)
         self.ResultAmount = wx.StaticText(self.panel, label= "")
         self.ResultAmount.SetForegroundColour(wx.BLUE)
-
-        #Display All Entries:: ListBox widget
-        self.LabelAllEntries = wx.StaticText(self.panel, label = "All Entries: ")
-
-        self.ResultAllEntries = wx.StaticText(self.panel, label = "")
-        self.ResultAllEntries.SetForegroundColour(wx.GREEN)
-
+        self.ResultExpInc = wx.StaticText(self.panel, label="")
+        self.ResultExpInc.SetForegroundColour(wx.BLUE)
 
         #Enter Date
         self.LabelDate = wx.StaticText(self.panel, label = "Date: ")
@@ -42,19 +37,13 @@ class MyFrame(wx.Frame):
         self.LabelAmount= wx.StaticText(self.panel, label = "Amount: ")
         self.EditAmount= wx.TextCtrl(self.panel, size=(140, -1))
 
-        #Expense/Income button
-        #button = wx.button(panel, id=wx.ID_ANY, label="Income", pos=(60, 100))
-        #button = wx.button(panel, id=wx.ID_ANY, label="Expense", pos=(150, 100))
-        #wx.CheckBox(pnl, label= "Expense")
-        #wx.CheckBox(pnl, label = "Income")
-
-
+        #Enter Expense/Income (would like to make into a button)
+        self.LabelExpInc = wx.StaticText(self.panel, label = "Type: ")
+        self.EditExpInc = wx.TextCtrl(self.panel, size=(140, -1))
 
         #Save button
         self.SaveButton = wx.Button(self.panel, label="Save")
 
-        #Show Entries button
-        self.ShowButton = wx.Button(self.panel, label="Show All Entries: ")
 
         # Set sizer for the frame, so we can change frame size to match widgets
         self.windowSizer = wx.BoxSizer()
@@ -66,16 +55,17 @@ class MyFrame(wx.Frame):
         self.sizer.Add(self.ResultDate, (0, 1))
         self.sizer.Add(self.ResultTitle, (1, 1))
         self.sizer.Add(self.ResultAmount, (2, 1))
-        self.sizer.Add(self.LabelDate, (3, 0))
-        self.sizer.Add(self.EditDate, (3, 1))
-        self.sizer.Add(self.LabelTitle, (4, 0))
-        self.sizer.Add(self.EditTitle, (4, 1))
-        self.sizer.Add(self.LabelAmount, (5,0))
-        self.sizer.Add(self.EditAmount,(5, 1))
-        self.sizer.Add(self.SaveButton, (6, 0), (1, 2), flag=wx.EXPAND)
-        self.sizer.Add(self.ShowButton, (0, 2), (1, 2), flag=wx.EXPAND)
-        self.sizer.Add(self.LabelAllEntries, (1,2))
-        self.sizer.Add(self.ResultAllEntries, (2, 2))
+        self.sizer.Add(self.ResultExpInc, (3, 1))
+        self.sizer.Add(self.LabelDate, (4, 0))
+        self.sizer.Add(self.EditDate, (4, 1))
+        self.sizer.Add(self.LabelTitle, (5, 0))
+        self.sizer.Add(self.EditTitle, (5, 1))
+        self.sizer.Add(self.LabelAmount, (6,0))
+        self.sizer.Add(self.EditAmount,(6, 1))
+        self.sizer.Add(self.LabelExpInc, (7,0))
+        self.sizer.Add(self.EditExpInc, (7,1))
+        self.sizer.Add(self.SaveButton, (8, 0), (1, 2), flag=wx.EXPAND)
+
 
         # Set simple sizer for a nice border
         self.border = wx.BoxSizer()
@@ -87,46 +77,34 @@ class MyFrame(wx.Frame):
 
         # Set event handlers
         self.SaveButton.Bind(wx.EVT_BUTTON, self.OnSaveButton)
-        self.ShowButton.Bind(wx.EVT_BUTTON, self.OnShowButton)
 
     #Capture Entry
     def OnSaveButton(self, e):
         self.ResultDate.SetLabel(self.EditDate.GetValue())
         self.ResultTitle.SetLabel(self.EditTitle.GetValue())
         self.ResultAmount.SetLabel(self.EditAmount.GetValue())
+        self.ResultExpInc.SetLabel(self.EditExpInc.GetValue())
 
         #Clear the fields after entering
-        self.ResultDate.Clear()
-        self.ResultTitle.Clear()
-        self.ResultAmount.Clear()
+        #self.ResultDate.Clear()
+        #self.ResultTitle.Clear()
+        #self.ResultAmount.Clear()
 
         #Make each field a string
         Date = str(self.EditDate.GetValue())
         Title = str(self.EditTitle.GetValue())
         Amount = str(self.EditAmount.GetValue())
+        ExpInc = str(self.EditExpInc.GetValue())
 
         #Save to Database
         Entry = db.HomeFinance.save({
             "Date": Date,
             "Title": Title,
-            "Amount": Amount
+            "Amount": Amount,
+            "ExpInc": ExpInc
             }
             )
 
-    def OnShowButton(self, e):
-    #Query the Database
-        #RawAllEntries = db.HomeFinance.find()
-        #self.ResultAllEntries.SetLabel(str(RawAllEntries))
-        #RawAllEntries.sort({ Title : -1}).limit(10);
-
-        for Entry in db.HomeFinance.find():
-            print Entry
-
-
-
-
-    #Turn the Query results into something that can be displayed
-    #Somehow...that = ResultAllEntries, and gets displayed in the same manner as the other ResultX items
 
 app = wx.PySimpleApp()
 frame = MyFrame()

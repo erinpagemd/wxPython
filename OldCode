@@ -1,0 +1,13 @@
+def OnShowButton(self, e):
+#Query the Database
+    #RawAllEntries = db.HomeFinance.find()
+    #self.ResultAllEntries.SetLabel(str(RawAllEntries))
+    #RawAllEntries.sort({ Title : -1}).limit(10);
+
+    for Entry in db.HomeFinance.find():
+        print Entry
+
+self.sizer.Add(self.ShowButton, (0, 2), (1, 2), flag=wx.EXPAND)
+
+#Show Entries button
+self.ShowButton = wx.Button(self.panel, label="Show All Entries: ")

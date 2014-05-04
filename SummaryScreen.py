@@ -17,15 +17,15 @@ class SimpleGrid(wx.grid.Grid):
         self.SetColLabelValue(0, "Title")
         self.SetColLabelValue(1, "Amount")
         self.SetRowLabelValue(0, "1")
-        self.SetCellValue(0, 0, FirstResultTitle)
-        self.SetCellValue(0, 1, "B")
+        self.SetCellValue(0, 0, FirstResult['Title'])
+        self.SetCellValue(0, 1, FirstResult['Amount'])
         self.SetRowLabelValue(1, "2")
         self.SetCellValue(1, 0, "C")
         self.SetCellValue(1, 1, "D")
         self.SetRowLabelValue(2, "3")
         self.SetCellValue(2, 0, "E")
         self.SetCellValue(2, 1, "F")
-        self.SetRowLabelValue(3, "G")
+        self.SetRowLabelValue(3, "4")
         self.SetCellValue(3, 0, "G")
         self.SetCellValue(3, 1, "I")
         self.SetRowLabelValue(4, "5")
@@ -47,22 +47,21 @@ class SimpleGrid(wx.grid.Grid):
 class TestFrame(wx.Frame):
     def __init__(self, parent):
         wx.Frame.__init__(self, parent, -1, "Summary Screen",
-                size=(300, 300))
+                size=(400, 300))
         grid = SimpleGrid(self)
 
         #Title Data
 
 #First Result
-FirstResultRawTitle = db.HomeFinance.find_one(
-    {},
-    {"Title": 1, "_id": 0}
-)
+FirstResult = db.HomeFinance.find_one()
+
+#FirstResultAmount = db.HomeFinance.find_one(
+#    {},
+#    {'Amount': 1, "_id": 0}
+#)
 #.skip(n)
 #if there is no title print "Not Specified..."
 
-FirstResultTitle = str(FirstResultRawTitle)
-
-#FirstResultDate =
 
 #Second Result
 
