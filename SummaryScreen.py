@@ -1,6 +1,7 @@
 import wx
 import wx.grid
 import pymongo
+import sys
 
 client = pymongo.MongoClient("localhost", 27017)
 db = client.PayCheck
@@ -20,29 +21,29 @@ class SimpleGrid(wx.grid.Grid):
         self.SetCellValue(0, 0, FirstResult['Title'])
         self.SetCellValue(0, 1, FirstResult['Amount'])
         self.SetRowLabelValue(1, "2")
-        self.SetCellValue(1, 0, "C")
-        self.SetCellValue(1, 1, "D")
+        self.SetCellValue(1, 0, SecondResult['Title'])
+        self.SetCellValue(1, 1, SecondResult['Amount'])
         self.SetRowLabelValue(2, "3")
-        self.SetCellValue(2, 0, "E")
-        self.SetCellValue(2, 1, "F")
+        self.SetCellValue(2, 0, ThirdResult['Title'])
+        self.SetCellValue(2, 1, ThirdResult['Amount'])
         self.SetRowLabelValue(3, "4")
-        self.SetCellValue(3, 0, "G")
-        self.SetCellValue(3, 1, "I")
+        self.SetCellValue(3, 0, FourthResult['Title'])
+        self.SetCellValue(3, 1, FourthResult['Amount'])
         self.SetRowLabelValue(4, "5")
-        self.SetCellValue(4, 0, "J")
-        self.SetCellValue(4, 1, "K")
+        self.SetCellValue(4, 0, FifthResult['Title'])
+        self.SetCellValue(4, 1, FifthResult['Amount'])
         self.SetRowLabelValue(5, "6")
-        self.SetCellValue(5, 0, "L")
-        self.SetCellValue(5, 1, "M")
+        self.SetCellValue(5, 0, SixthResult['Title'])
+        self.SetCellValue(5, 1, SixthResult['Amount'])
         self.SetRowLabelValue(6, "7")
-        self.SetCellValue(6, 0, "N")
-        self.SetCellValue(6, 1, "O")
+        self.SetCellValue(6, 0, SeventhResult['Title'])
+        self.SetCellValue(6, 1, SeventhResult['Amount'])
         self.SetRowLabelValue(7, "8")
-        self.SetCellValue(7, 0, "P")
-        self.SetCellValue(7, 1, "Q")
+        self.SetCellValue(7, 0, EighthResult['Title'])
+        self.SetCellValue(7, 1, EighthResult['Amount'])
         self.SetRowLabelValue(8, "9")
-        self.SetCellValue(8, 0, "R")
-        self.SetCellValue(8, 1, "S")
+        self.SetCellValue(8, 0, NinthResult['Title'])
+        self.SetCellValue(8, 1, NinthResult['Amount'])
 
 class TestFrame(wx.Frame):
     def __init__(self, parent):
@@ -50,43 +51,23 @@ class TestFrame(wx.Frame):
                 size=(400, 300))
         grid = SimpleGrid(self)
 
-        #Title Data
-
-#First Result
-FirstResult = db.HomeFinance.find_one()
-
-#FirstResultAmount = db.HomeFinance.find_one(
-#    {},
-#    {'Amount': 1, "_id": 0}
-#)
-#.skip(n)
-#if there is no title print "Not Specified..."
+#Query Results:: need to turn query into a cursor??
+#FirstResult = db.HomeFinance.find_one()
 
 
-#Second Result
+cursor = db.HomeFinance.find()
+FirstResult = cursor.sort("Date")[1]
+SecondResult = cursor.sort("Date")[2]
+ThirdResult = cursor.sort("Date")[3]
+FourthResult = cursor.sort("Date")[4]
+FifthResult = cursor.sort("Date")[5]
+SixthResult = cursor.sort("Date")[6]
+SeventhResult = cursor.sort("Date")[7]
+EighthResult = cursor.sort("Date")[8]
+NinthResult = cursor.sort("Date")[9]
 
-#Third Result
-
-#Fourth Result
-
-#Fifth Result
-
-#Sixth Result
-
-#Seventh Result
-
-#Eighth Result
-
-#Ninth Result
-
-        #Query the database....Find the Title and display
-        #return one result, return one result and skip one...etc
-
-
-        #Amount Data
-        #Query the database...sort based on same as title data ... Find the amount and display
-        #Chose display color based on Inc/Exp field
-
+        #Chose display color of Amount based on Inc/Exp field
+        #If there is not a result...print Null in the box
         #Put a box at the bottom that displays the current balance of showing entries
 
 ColLabels = ("Title", "Amount")
