@@ -37,9 +37,11 @@ class MyFrame(wx.Frame):
         self.LabelAmount= wx.StaticText(self.panel, label = "Amount: ")
         self.EditAmount= wx.TextCtrl(self.panel, size=(140, -1))
 
-        #Enter Expense/Income (would like to make into a button)
-        self.LabelExpInc = wx.StaticText(self.panel, label = "Type: ")
-        self.EditExpInc = wx.TextCtrl(self.panel, size=(140, -1))
+        #Enter Expense/Income
+        self.Exp = wx.CheckBox(self.panel, label = "Expense")
+        #self.Inc = wx.CheckBox(self.panel, label = "Income")
+        #Do I need a separate bind event for checking the box???
+        self.Exp.Bind(wx.EVT_CHECKBOX, self.MarkedBox)
 
         #Save button
         self.SaveButton = wx.Button(self.panel, label="Save")
@@ -62,8 +64,8 @@ class MyFrame(wx.Frame):
         self.sizer.Add(self.EditTitle, (5, 1))
         self.sizer.Add(self.LabelAmount, (6,0))
         self.sizer.Add(self.EditAmount,(6, 1))
-        self.sizer.Add(self.LabelExpInc, (7,0))
-        self.sizer.Add(self.EditExpInc, (7,1))
+        self.sizer.Add(self.Exp, (7,0))
+        #self.sizer.Add(self.Inc, (7,1))
         self.sizer.Add(self.SaveButton, (8, 0), (1, 2), flag=wx.EXPAND)
 
 
@@ -78,12 +80,23 @@ class MyFrame(wx.Frame):
         # Set event handlers
         self.SaveButton.Bind(wx.EVT_BUTTON, self.OnSaveButton)
 
+    def MarkedBox(self, e):
+        sender = e.GetEventObject()
+        isChecked = sender.GetValue()
+
+        if isChecked:
+            self.SetTitle('Expense')
+        else:
+            self.SetTitle('Income')
+
     #Capture Entry
     def OnSaveButton(self, e):
         self.ResultDate.SetLabel(self.EditDate.GetValue())
         self.ResultTitle.SetLabel(self.EditTitle.GetValue())
         self.ResultAmount.SetLabel(self.EditAmount.GetValue())
-        self.ResultExpInc.SetLabel(self.EditExpInc.GetValue())
+        #If the Expense Box is checked, save "Expense". Otherwise, save "Income"
+        #self.ResultExp.SetLabel(self.EditExp.GetValue())
+        #self.ResultInc.SetLabel(self.EditInc.GetValue())
 
         #Clear the fields after entering
         #self.ResultDate.Clear()
@@ -94,7 +107,7 @@ class MyFrame(wx.Frame):
         Date = str(self.EditDate.GetValue())
         Title = str(self.EditTitle.GetValue())
         Amount = str(self.EditAmount.GetValue())
-        ExpInc = str(self.EditExpInc.GetValue())
+        #ExpInc = str(self.EditExpInc.GetValue())
 
         #Save to Database
         Entry = db.HomeFinance.save({
